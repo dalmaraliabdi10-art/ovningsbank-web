@@ -1,10 +1,7 @@
 /* =========================================================================
    Övningsbanken - global stylesheet
 
-   All styling ligger i en fil med CSS-variabler överst. Valet är medvetet:
-   appen är liten, och responsiviteten blir lättare att läsa och demonstrera
-   när alla media queries finns samlade längst ned istället för utspridda
-   över ett tiotal komponentfiler.
+   All styling ligger i en fil med CSS-variabler överst. 
    ========================================================================= */
 
 :root {
