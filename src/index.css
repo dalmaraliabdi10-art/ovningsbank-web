@@ -1,0 +1,452 @@
+/* =========================================================================
+   Övningsbanken - global stylesheet
+
+   All styling ligger i en fil med CSS-variabler överst. Valet är medvetet:
+   appen är liten, och responsiviteten blir lättare att läsa och demonstrera
+   när alla media queries finns samlade längst ned istället för utspridda
+   över ett tiotal komponentfiler.
+   ========================================================================= */
+
+:root {
+  /* Headerns djupgröna botten. Egen ton, skild från knappgrönt, så att
+     ytan och handlingen inte konkurrerar om samma färg. */
+  --pitch:         #0D3B24;
+
+  /* Primär handling: knappar och aktivt filter. Vit text ger 5,02:1. */
+  --primary:       #15803D;
+  --primary-hover: #166534;
+
+  /* Fokusring och spinner - ljusare grön som syns mot både vitt och grönt. */
+  --pitch-light:   #16a34a;
+
+  /* Mörk skiffer istället för nästan-svart: mjukare mot ögat, och
+     kontrasten mot bakgrunden ökar ändå från 15,7:1 till 17,1:1. */
+  --ink:           #0F172A;
+  --ink-soft:      #475569;
+
+  --line:          #E2E8F0;
+  --surface:       #ffffff;
+  --surface-hover: #F1F5F9;
+  --canvas:        #F8FAFC;
+
+  --danger:        #991B1B;
+  --danger-bg:     #FEF2F2;
+  --danger-border: #FCA5A5;
+
+  /* Bekräftelsegrönt hålls medvetet mörkare än --primary. Samma värde på
+     båda hade gjort den ena variabeln meningslös: en ändring av knappfärgen
+     hade tyst ändrat även kvitteringarna. */
+  --success:       #166534;
+  --success-bg:    #F0FDF4;
+
+  --radius:       10px;
+  --gap:          1rem;
+  --shadow:       0 1px 2px rgba(16, 32, 26, .06), 0 8px 20px -14px rgba(16, 32, 26, .3);
+
+  --font: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: var(--font);
+  /* Relativ enhet: respekterar användarens egen textstorlek i webbläsaren. */
+  font-size: 1rem;
+  line-height: 1.55;
+  color: var(--ink);
+  background: var(--canvas);
+}
+
+h1, h2, h3 { margin: 0; line-height: 1.2; }
+p { margin: 0; }
+
+.visually-hidden {
+  position: absolute;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* ---------- Header ---------------------------------------------------- */
+
+.header {
+  background: var(--pitch);
+  color: #eaf5ef;
+  padding: 2rem 1.25rem 1.75rem;
+}
+
+.header__inner {
+  max-width: 72rem;
+  margin: 0 auto;
+}
+
+.header__eyebrow {
+  text-transform: uppercase;
+  letter-spacing: .12em;
+  font-size: .75rem;
+  color: #9fd3b6;
+  margin-bottom: .35rem;
+}
+
+.header__title {
+  font-size: clamp(1.75rem, 5vw, 2.6rem);
+  font-weight: 700;
+  letter-spacing: -.01em;
+}
+
+.header__summary {
+  margin-top: .4rem;
+  color: #c3e3d1;
+  font-size: .95rem;
+}
+
+/* ---------- Layout ---------------------------------------------------- */
+
+.main {
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 1.5rem 1.25rem 4rem;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+}
+
+/*
+  Mobil först: en kolumn. Formuläret ligger överst eftersom det är det
+  vanligaste ärendet på en telefon vid sidan av planen.
+*/
+.layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+  align-items: start;
+}
+
+/* ---------- Kort och formulär ----------------------------------------- */
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.form {
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: .9rem;
+}
+
+.form__title { font-size: 1.1rem; }
+
+.form__row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .75rem;
+}
+
+.form__row .field { flex: 1 1 8rem; }
+
+.form__actions {
+  display: flex;
+  gap: .5rem;
+  flex-wrap: wrap;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: .3rem;
+}
+
+.field__label {
+  font-size: .8rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+
+.field__input {
+  font: inherit;
+  color: inherit;
+  padding: .55rem .65rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  width: 100%;
+}
+
+.field__input:focus-visible {
+  outline: 2px solid var(--pitch-light);
+  outline-offset: 1px;
+  border-color: var(--pitch-light);
+}
+
+.field__input--area { resize: vertical; min-height: 5.5rem; }
+
+.field__input--invalid { border-color: var(--danger); }
+
+.field__error { font-size: .78rem; color: var(--danger); }
+
+/* ---------- Knappar --------------------------------------------------- */
+
+.button {
+  font: inherit;
+  font-weight: 600;
+  padding: .55rem .9rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--ink);
+  cursor: pointer;
+  /* Minst 44 px hög träffyta - tumvänligt på telefon. */
+  min-height: 2.75rem;
+}
+
+.button:hover:not(:disabled) { border-color: var(--pitch-light); }
+
+.button:focus-visible {
+  outline: 2px solid var(--pitch-light);
+  outline-offset: 2px;
+}
+
+.button:disabled { opacity: .55; cursor: not-allowed; }
+
+.button--primary {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+}
+
+.button--primary:hover:not(:disabled) {
+  background: var(--primary-hover);
+  border-color: var(--primary-hover);
+}
+
+.button--small {
+  padding: .4rem .7rem;
+  font-size: .85rem;
+  min-height: 2.25rem;
+}
+
+/* ---------- Filter ---------------------------------------------------- */
+
+.filterbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .45rem;
+  margin-bottom: 1rem;
+}
+
+.chip {
+  font: inherit;
+  font-size: .85rem;
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  padding: .35rem .75rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--ink-soft);
+  cursor: pointer;
+}
+
+/* Inaktiva filter saknade tidigare hover - utan den syns det inte att de
+   går att klicka på. */
+.chip:hover:not(.chip--active) { background: var(--surface-hover); }
+
+.chip--active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+}
+
+.chip__count {
+  font-size: .75rem;
+  opacity: .7;
+  font-variant-numeric: tabular-nums;
+}
+
+.chip:focus-visible { outline: 2px solid var(--pitch-light); outline-offset: 2px; }
+
+/* ---------- Rutnät och kort ------------------------------------------ */
+
+/*
+  auto-fill med minmax gör att antalet kolumner följer tillgänglig bredd.
+  Rutnätet behöver därför ingen egen media query - det anpassar sig även i
+  bredder som ligger mellan brytpunkterna nedan.
+*/
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 17rem), 1fr));
+  gap: 1rem;
+}
+
+.exercise {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.exercise__media {
+  aspect-ratio: 16 / 9;
+  background: #EEF2F6;
+}
+
+.exercise__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.exercise__placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink-soft);
+  font-size: .85rem;
+  background: repeating-linear-gradient(
+    45deg, #EEF2F6, #EEF2F6 12px, #E6EBF1 12px, #E6EBF1 24px
+  );
+}
+
+.exercise__body {
+  padding: .9rem 1rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: .55rem;
+  flex: 1;
+}
+
+.exercise__tags { display: flex; flex-wrap: wrap; gap: .35rem; }
+
+.exercise__title { font-size: 1.05rem; }
+
+.exercise__description {
+  font-size: .9rem;
+  color: var(--ink-soft);
+  /* Håller korten jämnhöga utan att klippa texten hårt. */
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.exercise__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .4rem;
+  margin-top: auto;
+  padding-top: .3rem;
+}
+
+/* ---------- Taggar ---------------------------------------------------- */
+
+.tag {
+  font-size: .72rem;
+  font-weight: 600;
+  letter-spacing: .03em;
+  text-transform: uppercase;
+  padding: .2rem .5rem;
+  border-radius: 5px;
+  background: var(--surface-hover);
+  color: var(--ink-soft);
+}
+
+/* Ljusare bottnar i samma familj som resten av paletten. Taggarna är
+   versaler i .72rem, alltså liten text - varje par är kontrollerat mot
+   WCAG:s 4,5:1. Uppvärmning behåller sin mörkare brunton (6,37:1); det
+   ljusare #B45309 hade landat på 4,51:1, precis på gränsen. */
+.tag--uppvarmning  { background: #FEF3C7; color: #92400E; }  /* 6,37:1 */
+.tag--passningsspel{ background: #EFF6FF; color: #1D4ED8; }  /* 6,16:1 */
+.tag--avslut       { background: #FEF2F2; color: #B91C1C; }  /* 5,91:1 */
+.tag--taktik       { background: #F3E8FF; color: #6B21A8; }  /* 7,39:1 */
+
+.tag--done    { background: var(--success-bg); color: var(--success); }
+.tag--planned { background: var(--surface-hover); color: var(--ink-soft); }
+
+/* ---------- Meddelanden och tillstånd --------------------------------- */
+
+.message {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: .75rem;
+  padding: .7rem .9rem;
+  border-radius: 8px;
+  border: 1px solid;
+  font-size: .92rem;
+}
+
+.message--error   { background: var(--danger-bg);  border-color: var(--danger-border); color: var(--danger); }
+.message--success { background: var(--success-bg); border-color: #BBF7D0;              color: var(--success); }
+
+.message__close {
+  background: none;
+  border: none;
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: pointer;
+  color: inherit;
+  padding: 0 .2rem;
+}
+
+.state {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  padding: 2rem 1rem;
+  color: var(--ink-soft);
+  justify-content: center;
+  text-align: center;
+}
+
+.spinner {
+  width: 1.1rem;
+  height: 1.1rem;
+  border: 2px solid var(--line);
+  border-top-color: var(--pitch-light);
+  border-radius: 50%;
+  animation: spin .7s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .spinner { animation-duration: 3s; }
+}
+
+/* =========================================================================
+   Brytpunkter
+
+   Två uttalade skärmstorlekar enligt kravet. Rutnätet ovan sköter allt
+   däremellan på egen hand.
+   ========================================================================= */
+
+/* Surfplatta och uppåt: formuläret får en egen kolumn vid sidan av listan. */
+@media (min-width: 48rem) {
+  .layout {
+    grid-template-columns: minmax(18rem, 22rem) 1fr;
+    gap: 1.5rem;
+  }
+
+  /* Formuläret följer med vid scroll när listan är lång. */
+  .layout__aside {
+    position: sticky;
+    top: 1.5rem;
+  }
+
+  .main { padding: 2rem 1.5rem 5rem; }
+}
+
+/* Desktop: mer luft och plats för fler kort per rad. */
+@media (min-width: 75rem) {
+  .layout { grid-template-columns: 24rem 1fr; gap: 2rem; }
+  .grid { gap: 1.25rem; }
+}
